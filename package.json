@@ -1,0 +1,24 @@
+{
+  "name": "file-total",
+  "version": "0.1.0",
+  "description": "file total tool",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haiyon/filetotal.git"
+  },
+  "keywords": [
+    "file total",
+    "line total",
+    "count"
+  ],
+  "author": "CC.Shen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/haiyon/filetotal/issues"
+  },
+  "homepage": "https://github.com/haiyon/filetotal#readme"
+}
