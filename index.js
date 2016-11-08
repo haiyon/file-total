@@ -5,11 +5,13 @@ let result = { file: 0, mate: 0, line: 0}
 
 rl.question('请输入要统计的路径或文件(' + process.cwd() + '): ', (input) => {
   input = input !== "" ? input : process.cwd();
-  run(input);
-  rl.close();
+  rl.question('匹配文件名: ', (key) => {
+    run(input, key);
+    rl.close();
+  });
 });
 
-function run(input) {
+function run(input,key) {
   fs.stat(input, (err, stats) => {
     if (err) {
       console.log('err: 请确认路径或文件...');
@@ -20,13 +22,13 @@ function run(input) {
       let fileLine = file.split('\n').length - 1;
       console.log('\n文件: ' + process.cwd() + '/' + input + "\n一共 " + fileLine + " 行\n");
     } else if(stats.isDirectory()) {
-      total(input);
+      total(input, key);
       console.log('总文件: ' + result.file + ", 总匹配: " + result.mate + " 总行数: " + result.line + "\n");
     }
   });
 }
 
-function total(dir) {
+function total(dir, key) {
   let files = fs.readdirSync(dir);
   let fullPath = dir + '/'
   let filesCount = files.length;
@@ -36,14 +38,14 @@ function total(dir) {
   files.forEach((name) => {
     let fss = fs.statSync(fullPath + name);
     if(fss.isFile()) {
-      // if (name.indexOf('Stock') != -1) {
+      if (name.indexOf(key) != -1) {
         let file = fs.readFileSync(fullPath + name, 'utf-8');
         let fileLine = file.split('\n').length - 1;
         mateFile++;
         lineCount += fileLine;
-      // }
+      }
     } else if(fss.isDirectory()) {
-      total(fullPath + name);
+      total(fullPath + name, key);
     }
   })
   if(mateFile > 0) {
